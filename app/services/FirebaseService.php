@@ -18,64 +18,62 @@ class FirebaseService
         // return $appUserId;
         $firebaseLikedArray = $db->getReference($tableName)->getValue();
         $likedAndUnlikedUserList = [];
-        
-        if($firebaseLikedArray){
-        foreach ($firebaseLikedArray as $item) {
-            if ($item['myid'] == $appUserId  && $item['tag'] == 'liked') {
 
-                $likedAndUnlikedUserList[] = $item['likeduserid'];
+        if ($firebaseLikedArray) {
+            foreach ($firebaseLikedArray as $item) {
+                if ($item['myid'] == $appUserId  && $item['tag'] == 'liked') {
+
+                    $likedAndUnlikedUserList[] = $item['likeduserid'];
+                }
             }
-        }
         }
 
         return  $likedAndUnlikedUserList;
     }
-    
-     public function usersWhoLikedMe($db, $appUserId, $tableName)
+
+    public function usersWhoLikedMe($db, $appUserId, $tableName)
     {
         $firebaseLikedArray = $db->getReference($tableName)->getValue();
         $userLikedMe = [];
-        if($firebaseLikedArray){
-        foreach ($firebaseLikedArray as $item) {
-            if ($item['likeduserid'] == $appUserId) {
+        if ($firebaseLikedArray) {
+            foreach ($firebaseLikedArray as $item) {
+                if ($item['likeduserid'] == $appUserId && $item['tag'] == 'liked') {
 
-                $userLikedMe[] = $item['myid'];
+                    $userLikedMe[] = $item['myid'];
+                }
             }
-        }
         }
 
         return  $userLikedMe;
     }
 
 
-  public function usersILiked($db, $appUserId, $tableName)
+    public function usersILiked($db, $appUserId, $tableName)
     {
         $firebaseLikedArray = $db->getReference($tableName)->getValue();
         $userLikedMe = [];
-        if($firebaseLikedArray){
-        foreach ($firebaseLikedArray as $item) {
-            if ($item['myid'] == $appUserId) {
+        if ($firebaseLikedArray) {
+            foreach ($firebaseLikedArray as $item) {
+                if ($item['myid'] == $appUserId  && $item['tag'] == 'liked') {
 
-                $userLikedMe[] = $item['likeduserid'];
+                    $userLikedMe[] = $item['likeduserid'];
+                }
             }
-        }
         }
 
         return  $userLikedMe;
     }
 
-    
-      public function matchList($db, $appUserId, $tableName)
+
+    public function matchList($db, $appUserId, $tableName)
     {
-       
-       
-      
+
         $firebaseLikedArray = $db->getReference($tableName)->getValue();
         $matchList = [];
 
         if ($firebaseLikedArray) {
             foreach ($firebaseLikedArray as $item) {
-                if ($item['myid'] == $appUserId) {
+                if ($item['myid'] == $appUserId  && $item['tag'] == 'liked') {
 
                     $matchList[] = $item['likeduserid'];
                 } elseif ($item['likeduserid'] == $appUserId) {
@@ -88,7 +86,7 @@ class FirebaseService
         return  $matchList;
     }
 
-   public function livestreamingUser($db, $tableName)
+    public function livestreamingUser($db, $tableName)
     {
 
         $firebaseLikedArray = $db->getReference($tableName)->getValue();
@@ -103,5 +101,4 @@ class FirebaseService
 
         return  $liveusers;
     }
-    
 }

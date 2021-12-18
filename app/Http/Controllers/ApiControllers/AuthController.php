@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ApiControllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\services\AuthService\LocalAuthentication;
 use App\services\AuthService\SocialAuth;
 use App\services\AuthService\PhoneAuth;
@@ -47,7 +48,7 @@ class AuthController extends Controller
         $registerResponse = $localAuthentication->register(
             $request->email,
             $request->password,
-           $request->password_confirmation,
+            $request->password_confirmation,
             $request->contactNo,
             $request->name,
 
@@ -67,13 +68,12 @@ class AuthController extends Controller
         return response()->json($loginResponse);
     }
 
-//phone auth
+    //phone auth
     public function checkUserWithPhone(Request $request)
     {
         $resp = PhoneAuth::checkIfUserWithNumberExist($request->phone);
-       
-            return response()->json($resp);
-       
+
+        return response()->json($resp);
     }
 
     public function createUserWIthPhone(Request $request)
@@ -98,5 +98,15 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'log out successful'
         ]);
+    }
+
+    public function checkIfUserExistwithEmail(Request $request)
+    {
+        $user = User::where('email', $request->email)->count();
+        if ($user) {
+            return response()->json(['success' => true, 'data' =>  true]);
+        } else {
+            return response()->json(['success' => true, 'data' => false]);
+        }
     }
 }

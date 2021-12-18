@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+  return $request->user();
 });
 
 
@@ -45,92 +45,92 @@ Route::get('/getInterestList', [InterestController::class, 'getInterestList']);
 Route::post('/checkUserWIthPhoneExist', [AuthController::class, 'checkUserWithPhone']);
 
 Route::post('/createUserWithPhone', [AuthController::class, 'createUserWIthPhone']);
+Route::post('/checkUserWithEmail', [AuthController::class, 'checkIfUserExistwithEmail']);
 
 Route::group(['middleware' => ['auth:api']], function () {
 
-    //select user details
-    Route::post('/setGender', [UserSettingController::class, 'selectGender']);
-    Route::post('/setPreferedGneder', [UserSettingController::class, 'changePreferedGenderSearch']);
-    Route::post('/changeLocation', [UserSettingController::class, 'changeUserLocation']);
-    Route::post('/selectInterests', [UserSettingController::class, 'selectInterest']);
-    Route::post('/setBirhtday', [UserSettingController::class, 'setbirthdate']);
-    Route::post('/changeName', [UserSettingController::class, 'changename']);
-    Route::get('/updateActiveStatus', [UserSettingController::class, 'updateActiveStatus']);
-    Route::post('/setEmail', [UserSettingController::class, 'setEmail']);
-    Route::post('/setSchool', [UserSettingController::class, 'setSchool']);
+  //select user details
+  Route::post('/setGender', [UserSettingController::class, 'selectGender']);
+  Route::post('/setPreferedGneder', [UserSettingController::class, 'changePreferedGenderSearch']);
+  Route::post('/changeLocation', [UserSettingController::class, 'changeUserLocation']);
+  Route::post('/selectInterests', [UserSettingController::class, 'selectInterest']);
+  Route::post('/setBirhtday', [UserSettingController::class, 'setbirthdate']);
+  Route::post('/changeName', [UserSettingController::class, 'changename']);
+  Route::get('/updateActiveStatus', [UserSettingController::class, 'updateActiveStatus']);
+  Route::post('/setEmail', [UserSettingController::class, 'setEmail']);
+  Route::post('/setSchool', [UserSettingController::class, 'setSchool']);
 
-    //fcm token store
-    Route::post('/setFcmDeviceToken', [UserSettingController::class, 'setFcmDeviceToken']);
+  //fcm token store
+  Route::post('/setFcmDeviceToken', [UserSettingController::class, 'setFcmDeviceToken']);
 
-    //swipe screen
-    Route::get('/getNearbyUser', [SwipePageController::class, 'getSwipePageUsers']);
+  //swipe screen
+  Route::get('/getNearbyUser', [SwipePageController::class, 'getSwipePageUsers']);
 
-    //pick interests
+  //pick interests
 
-    Route::post('/pickInterest', [InterestController::class, 'pickUserInterests']);
-    Route::get('/userWithCommonInterests', [InterestController::class, 'usersWithCommonInterests']);
-
-
-    //like user
-    Route::post('/likeUser', [MatchController::class, 'likeUser']);
-    Route::get('/likeList', [MatchController::class, 'userLikeList']);
+  Route::post('/pickInterest', [InterestController::class, 'pickUserInterests']);
+  Route::get('/userWithCommonInterests', [InterestController::class, 'usersWithCommonInterests']);
 
 
-    //recently active users
-    Route::get('/recentlyActiveUsers', [ActivityController::class, 'getRecentlyActiveUser']);
+  //like user
+  Route::post('/likeUser', [MatchController::class, 'likeUser']);
+  Route::get('/likeList', [MatchController::class, 'userLikeList']);
 
 
-    //user profile
-    Route::get('/userProfile', [UserProfileController::class, 'userProfile']);
-    Route::post('/updateProfile', [UserProfileController::class, 'updateUserDetails']);
-
-    //person details
-    Route::get('/personProfile/{pid}', [PersonDetailsController::class, 'PersonDetails']);
-
-    //USER EXPLORE
-    Route::get('/userExplore', [ActivityController::class, 'userExplore']);
+  //recently active users
+  Route::get('/recentlyActiveUsers', [ActivityController::class, 'getRecentlyActiveUser']);
 
 
-    //FOLLOW SYSTEM
-    Route::post('/followAUser', [FollowControler::class, 'followUser']);
-    Route::get('/followList', [FollowControler::class, 'followLists']);
+  //user profile
+  Route::get('/userProfile', [UserProfileController::class, 'userProfile']);
+  Route::post('/updateProfile', [UserProfileController::class, 'updateUserDetails']);
 
-    //subscription module
-    Route::post('/userSubscribe', [SubscriptionController::class, 'userSubscribe']);
-    Route::post('/updateProfilePic', [UserProfileController::class, 'uploadProfilePic']);
-    Route::post('/uploadUserPhotos', [UserProfileController::class, 'uploadUserPhotos']);
+  //person details
+  Route::get('/personProfile/{pid}', [PersonDetailsController::class, 'PersonDetails']);
 
-    //block module
-    Route::post('/blockUser', [BlockController::class, 'blockUser']);
-    Route::post('/unblockUser', [BlockController::class, 'unblockUser']);
-    Route::get('/blockList', [BlockController::class, 'blockList']);
-
-    //REPORT SYSTEM
-    Route::post('/reportuser', [ReportController::class, 'reportUser']);
+  //USER EXPLORE
+  Route::get('/userExplore', [ActivityController::class, 'userExplore']);
 
 
-    //match list
+  //FOLLOW SYSTEM
+  Route::post('/followAUser', [FollowControler::class, 'followUser']);
+  Route::get('/followList', [FollowControler::class, 'followLists']);
 
-    //update interest
-    Route::post('/updateInterest', [UserSettingController::class, 'updateInterests']);
+  //subscription module
+  Route::post('/userSubscribe', [SubscriptionController::class, 'userSubscribe']);
+  Route::post('/updateProfilePic', [UserProfileController::class, 'uploadProfilePic']);
+  Route::post('/uploadUserPhotos', [UserProfileController::class, 'uploadUserPhotos']);
 
-    //store fcm token
-    Route::post('/storeFcmToken', [UserSettingController::class, 'storeFcmToken']);
-    Route::get('/getuserFcmToken/{uid}', [UserSettingController::class, 'getUserFcmToken']);
-    
-     //LIKE LIST
-       Route::get('/usersLikedMe', [LikedPageController::class, 'usersWhoLikedMe']);
-        Route::get('/userIliked', [LikedPageController::class, 'usersIliked']);
-       
-       //agora token generator
-      
-      //MATCHED USER
-   
+  //block module
+  Route::post('/blockUser', [BlockController::class, 'blockUser']);
+  Route::post('/unblockUser', [BlockController::class, 'unblockUser']);
+  Route::get('/blockList', [BlockController::class, 'blockList']);
+
+  //REPORT SYSTEM
+  Route::post('/reportuser', [ReportController::class, 'reportUser']);
+
+
+  //match list
+
+  //update interest
+  Route::post('/updateInterest', [UserSettingController::class, 'updateInterests']);
+
+  //store fcm token
+  Route::post('/storeFcmToken', [UserSettingController::class, 'storeFcmToken']);
+  Route::get('/getuserFcmToken/{uid}', [UserSettingController::class, 'getUserFcmToken']);
+
+  //LIKE LIST
+  Route::get('/usersLikedMe', [LikedPageController::class, 'usersWhoLikedMe']);
+  Route::get('/userIliked', [LikedPageController::class, 'usersIliked']);
+
+  //agora token generator
+
+  //MATCHED USER
+
   Route::get('/matchList', [MatchController::class, 'getUserMatchList']);
 });
- Route::get('/liveStreamingusers', [LikedPageController::class, 'liveStreamingUser']);
-  Route::get('/liveStreamingUsersDetails/{id}', [LikedPageController::class, 'liveStreamingUsersDetails']);
+Route::get('/liveStreamingusers', [LikedPageController::class, 'liveStreamingUser']);
+Route::get('/liveStreamingUsersDetails/{id}', [LikedPageController::class, 'liveStreamingUsersDetails']);
 
-   
+
 Route::post('/getAgoraToken', [AgoraTokenGeneratorController::class, 'generateToken']);
-
