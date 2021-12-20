@@ -113,7 +113,7 @@
                                         <div class="col-md-6">
                                             <div class="small-box bg-light">
                                                 <div class="inner">
-                                                    <p class="font-weight-bold">Total Like</p>
+                                                    <p class="font-weight-bold">Total Users Who Liked Me</p>
 
                                                     <h3>1</h3>
                                                 </div>
@@ -121,6 +121,10 @@
                                                     <i class="far fa-thumbs-up mt-4"
                                                         style="color:blue; font-size:50px;"></i>
                                                 </div>
+                                                <a href="{{url('/usersWhoLikedMe/'.$user['id'])}}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"
+                                                        style="color:#1DB9C3;"></i></a>
                                             </div>
                                         </div>
 
@@ -174,6 +178,23 @@
                                                     <i class="fas fa-eye mt-4"
                                                         style="color:#BE4BDB; font-size:50px;"></i>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="small-box bg-light">
+                                                <div class="inner">
+                                                    <p class="font-weight-bold">Total Users Who I Liked</p>
+
+                                                    <h3>1</h3>
+                                                </div>
+                                                <div class="icon">
+                                                    <i class="far fa-thumbs-up mt-4"
+                                                        style="color:blue; font-size:50px;"></i>
+                                                </div>
+                                                <a href="{{url('/usersIliked/'.$user['id'])}}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"
+                                                        style="color:#1DB9C3;"></i></a>
                                             </div>
                                         </div>
                                     </div>
