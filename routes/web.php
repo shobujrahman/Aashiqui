@@ -110,7 +110,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Notification Route
     Route::get('notification',[NotificationController::class, 'index'])->name('notification');
-    Route::post('notifications/send','NotificationController@send');
+    Route::post('notifications/send',[NotificationController::class, 'send'])->name('notification.send');
     //gallery
     Route::get('gallery',[UserPhotosController::class, 'allUsersPhotos'])->name('gallery');
     //changePassword
@@ -118,12 +118,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('password/update',[ChangePasswordController::class, 'changePassword'])->name('password.update');
 
     //matchController
-    Route::get('/usersWhoLikedMe/{id}', [LikedPageController::class, 'usersWhoLikedMe'])->name('match.usersWhoLikedMe');
-    Route::get('/usersIliked/{id}', [LikedPageController::class, 'usersIliked'])->name('match.usersIliked');
+    Route::get('/usersWhoLikedMe/{id}', [LikedPageController::class, 'usersWhoLikedMe'])->name('like.usersWhoLikedMe');
+    Route::get('/usersIliked/{id}', [LikedPageController::class, 'usersIliked'])->name('like.usersIliked');
 
     
     //FakeUserController
     Route::get('/fakeUsers', [FakeUserController::class, 'fakeUsersList'])->name('fakeUser.fakeUsersList');
     Route::get('/fakeUsers/create', [FakeUserController::class, 'create'])->name('fakeUser.create');
+    Route::post('/fakeUsers/submit', [FakeUserController::class, 'store'])->name('fakeUser.submit');
    
 });

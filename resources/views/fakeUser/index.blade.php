@@ -19,6 +19,135 @@
             </div>
         </section>
         <!--  -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!--  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-light">
+                            <div class="inner">
+                                <p class="font-weight-bold">Total Users</p>
+
+                                <h3>{{$userCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-users mt-4" style="color:#9e4296; font-size:50px;"></i>
+                            </div>
+                            <a href="{{url('/user')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right" style="color:#9e4296;"></i></a>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-light">
+                            <div class="inner">
+                                <p class="font-weight-bold">Free Users</p>
+
+                                <h3>0</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-users mt-4" style="color:#1DB9C3; font-size:50px;"></i>
+                            </div>
+                            <a href="{{url('/femaleUser')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right" style="color:#1DB9C3;"></i></a>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-light">
+                            <div class="inner">
+                                <p class="font-weight-bold">Fake Users</p>
+
+                                <h3>{{$fakeUserCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-users mt-4" style="color:#000000; font-size:50px;"></i>
+                            </div>
+                            <a href="{{url('/fakeUsers')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right" style="color:#000000;"></i></a>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-light">
+                            <div class="inner">
+                                <p class="font-weight-bold">Verified Users</p>
+
+                                <h3>{{$verifyCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-users mt-4" style="color:#49FF00; font-size:50px;"></i>
+                            </div>
+                            <a href="{{url('/verification')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right" style="color:#49FF00;"></i></a>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-light">
+                            <div class="inner">
+                                <p class="font-weight-bold">UnVerified Users</p>
+
+                                <h3>{{$unVerifyCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-users mt-4" style="color:#CD1818; font-size:50px;"></i>
+                            </div>
+                            <a href="{{url('/unVerifiedUser')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right" style="color:#CD1818;"></i></a>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-light">
+                            <div class="inner">
+                                <p class="font-weight-bold">Premium Users</p>
+
+                                <h3>{{$premiumCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-users mt-4" style="color:#FF9300; font-size:50px;"></i>
+                            </div>
+                            <a href="{{url('/femaleUser')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right" style="color:#FF9300;"></i></a>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-light">
+                            <div class="inner">
+                                <p class="font-weight-bold">Male Users</p>
+
+                                <h3>{{$maleCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-male mt-4" style="color:#02A3FE; font-size:50px;"></i>
+                            </div>
+                            <a href="{{url('/maleUser')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right" style="color:#02A3FE;"></i></a>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-light">
+                            <div class="inner">
+                                <p class="font-weight-bold">Female Users</p>
+
+                                <h3>{{$femaleCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-female mt-4" style="color:#E648A2; font-size:50px;"></i>
+                            </div>
+                            <a href="{{url('/femaleUser')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right" style="color:#E648A2;"></i></a>
+                        </div>
+                    </div>
+                    <!--  -->
+
+
+                </div>
+            </div>
+        </section>
 
         <!--  -->
 

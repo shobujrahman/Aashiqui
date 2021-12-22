@@ -30,7 +30,8 @@ class HomeController extends Controller
     public function index()
     {
         Session::put('page', 'dashoard');
-        $userCount = User::count();
+        $userCount = User::where('isAdminGenerated','=',0)->count();
+        $fakeUserCount = User::where('isAdminGenerated','=',1)->count();
         $maleCount = User::where('gender','male')->count();
         $femaleCount = User::where('gender','female')->count();
         $verifyCount = User::where('isVerified',1)->count();
@@ -49,7 +50,7 @@ class HomeController extends Controller
 
         
         return view('home',
-            compact('unVerifyCount','subscriptionCount','matchCount','userCount','maleCount','femaleCount','verifyCount','subscription','activeCount','recentActive','likeCount'));
+            compact('fakeUserCount','unVerifyCount','subscriptionCount','matchCount','userCount','maleCount','femaleCount','verifyCount','subscription','activeCount','recentActive','likeCount'));
         
     }
 
