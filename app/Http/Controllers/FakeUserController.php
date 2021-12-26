@@ -102,22 +102,7 @@ class FakeUserController extends Controller
        $user->interests()->sync($interestArray);
 
        
-//fakeUser StreamVideo Upload
-       $s3 = Storage::disk('do_spaces');
-            $file = $request->file('live_stream_url');
-            $fileName = $file->getClientOriginalName();
 
-           
-            $path = $s3->putFileAs('Asiquee/FakeUserStream', $file, $fileName, 'public');
-
-       FakeUserLiveStreaming::create([
-        'user_id' => $user->id,
-        // 'live_stream_url' => $request->live_stream_url,
-        'live_stream_url' => $user->live_stream_url= $path,
-
-        
-            
-    ]);
 
     
     // $user->FakeUserLiveStreaming()->create(['live_stream_url' => $request->live_stream_url]);

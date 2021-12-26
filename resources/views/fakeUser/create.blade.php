@@ -104,11 +104,11 @@
                                     <input type="file" class="form-control form-control-border" id="imageUrl"
                                         name="imageUrl[]" multiple placeholder="enter image url">
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="live_stream_url">Upload Video</label>
                                     <input type="file" class="form-control form-control-border" id="live_stream_url"
                                         name="live_stream_url" placeholder="enter url">
-                                </div>
+                                </div> -->
                                 <br>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-warn">Create</button>

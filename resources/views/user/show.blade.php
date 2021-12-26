@@ -245,10 +245,22 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="small-box bg-light">
+                                                @if($user['isBlocked']==1)
                                                 <div class="inner" style=" background-color: #E02401;"><a
-                                                        href="{{url('user/update-verify',$user['id'])}}"
-                                                        style="color:white;"><i class="fas fa-ban"></i> Block User
+                                                        href="{{url('user/block',$user['id'])}}" style="color:white;">
+                                                        <i class="fas fa-ban"></i>
+                                                        Blocked
                                                     </a></div>
+
+                                                @else
+
+                                                <div class="inner" style=" background-color: #F15A27;"><a
+                                                        href="{{url('user/block',$user['id'])}}" style="color:white;"><i
+                                                            class="fas fa-check-circle"></i>
+                                                        Unblocked
+                                                    </a></div>
+
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -274,12 +286,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="small-box bg-light">
-                                                <!-- <div class="inner">
-                                                    <p class="font-weight-bold">Boost User</p>
-                                                    <a onclick="return confirm('Are you sure want to delete this Interest?')"
-                                                        href="{{url('/gift/delete/')}}" class="btn btn-warn"
-                                                        role="button"><i class="fas fa-bolt"></i></a>
-                                                </div> -->
+
                                                 <div class="inner" style=" background-color: #F15A27;"><a
                                                         href="{{url('user/update-verify',$user['id'])}}"
                                                         style="color:white;"><i class="fas fa-bolt"></i> Boost User
@@ -305,25 +312,34 @@
                 <div class="col-md-6">
                     <div class="card card-dark">
                         <div class="card-header d-flex justify-content-center">
-                            <h4 class="card-title">Payments</h4>
+                            <h4 class="card-title">BlockList</h4>
 
                         </div>
                         <div class="card-body" style="overflow-x:auto;">
                             <table id="" class="table table-hover overflow-auto">
                                 <thead>
                                     <tr>
-                                        <!-- <th>Sl.No</th> -->
-                                        <th>Id</th>
-                                        <th>Date</th>
-                                        <th>Amount</th>
+                                        <th>Sl.No</th>
+                                        <th>UserName</th>
+                                        <th>Email</th>
+                                        <th>ProfilePic</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($payments as $payment)
+                                    @foreach($user->blockedUsers as $blocked)
                                     <tr>
-                                        <td>{{ $payment->user_id }}</td>
-                                        <td>{{ $payment->created_at }}</td>
-                                        <td></td>
+                                        <td>{{$no++}}</td>
+                                        <td>{{$blocked->name}}</td>
+                                        <td>{{$blocked->email}}</td>
+                                        <td>
+                                            @if(!empty($blocked->profile_pic))
+
+                                            <img style="width: 50px; height: 50px;"
+                                                src="{{env('URL')}}{{$blocked->profile_pic}}" />
+                                            @else
+                                            <?php echo "no photo"?>
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -361,35 +377,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-4">
-                    <div class="card card-dark">
-                        <div class="card-header d-flex justify-content-center">
-                            <h4 class="card-title">Payments</h4>
-
-                        </div>
-                        <div class="card-body" style="overflow-x:auto;">
-                            <table id="" class="table table-hover overflow-auto">
-                                <thead>
-                                    <tr>
-
-                                        <th>Id</th>
-                                        <th>Date</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($payments as $payment)
-                                    <tr>
-                                        <td>{{ $payment->user_id }}</td>
-                                        <td>{{ $payment->created_at }}</td>
-                                        <td></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> -->
         </div>
 </div>
 </section>

@@ -15,7 +15,7 @@ class UserPhotosController extends Controller
         $user_photos = UserPhoto::with(['user'=>function($query){
             $query->select('users.id','users.name','users.profile_pic');
         }])->orderBy('id','desc')->get();
-        // return $user_photos;
+        
         return view('gallery.gallery', compact('user_photos'));
     }
 }

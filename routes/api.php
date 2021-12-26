@@ -14,7 +14,8 @@ use App\Http\Controllers\ApiControllers\BlockController;
 use App\Http\Controllers\ApiControllers\ReportController;
 use App\Http\Controllers\ApiControllers\LikedPageController;
 use App\Http\Controllers\ApiControllers\AgoraTokenGeneratorController;
-
+use App\Http\Controllers\ApiControllers\FakeUsersStreamingController;
+use App\Http\Controllers\ApiControllers\GiftController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -134,3 +135,9 @@ Route::get('/liveStreamingUsersDetails/{id}', [LikedPageController::class, 'live
 
 
 Route::post('/getAgoraToken', [AgoraTokenGeneratorController::class, 'generateToken']);
+
+//fake users streaming
+Route::get('/getFakeUsersVideo', [FakeUsersStreamingController::class, 'getAllFakeStream']);
+
+//Gift
+Route::get('/getAllGift', [GiftController::class, 'allGift']);

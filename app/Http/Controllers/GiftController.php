@@ -14,7 +14,8 @@ class GiftController extends Controller
     {
         session::put('page','gift');
         $gifts = Gift::all();
-        return view('gift.index', compact('gifts'))->with('no', 1);
+        $giftCount = Gift::count();
+        return view('gift.index', compact('gifts','giftCount'))->with('no', 1);
     }
 
     //create store functionality
