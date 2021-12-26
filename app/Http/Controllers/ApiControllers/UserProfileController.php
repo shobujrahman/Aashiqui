@@ -106,6 +106,7 @@ class UserProfileController extends Controller
         );
     }
 
+
     public function deleteUserPhoto(Request $request)
     {
         try {
@@ -144,3 +145,4 @@ class UserProfileController extends Controller
         }
     }
 }
+

@@ -34,7 +34,7 @@
                             <h5 class="widget-user-desc text-left">{{$user->name}}</h5>
                         </div>
                         <div class="widget-user-image">
-                            <img class="img-circle" src="{{env('URL')}}{{$user->profile_pic}}" alt="User Avatar">
+                            <img class=" img-circle" src="{{env('URL')}}{{$user->profile_pic}}" alt="User Avatar">
                         </div>
                         <div class="card-footer">
                             <div class="row">
@@ -55,15 +55,6 @@
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-2">
-                                    <div class="description-block">
-                                        <h5 class="description-header">Age</h5>
-                                        <span class="description-text">{{$user->age}}</span>
-                                    </div>
-
-                                </div>
-                                <!-- /.col -->
-                                <!-- /.col -->
-                                <div class="col-sm-2 border-right">
                                     <div class="description-block ">
                                         <h5 class="description-header">Account Type</h5>
                                         <span class="description-text">
@@ -73,6 +64,15 @@
                                             <?php echo "Un-Verified"?>
                                             @endif
                                         </span>
+                                    </div>
+
+                                </div>
+                                <!-- /.col -->
+                                <!-- /.col -->
+                                <div class="col-sm-2 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Age</h5>
+                                        <span class="description-text">{{$user->age}}</span>
                                     </div>
 
                                 </div>
@@ -102,6 +102,7 @@
                     <!-- /.widget-user -->
                 </div>
                 <!-- /.col -->
+
                 <!--Analytics-->
                 <div class="col-md-12">
                     <div class="card">
@@ -113,14 +114,18 @@
                                         <div class="col-md-6">
                                             <div class="small-box bg-light">
                                                 <div class="inner">
-                                                    <p class="font-weight-bold">Total Like</p>
+                                                    <p class="font-weight-bold">Total Users Who Liked Me</p>
 
-                                                    <h3>1</h3>
+                                                    <h3>{{$usersWhoLikedMe}}</h3>
                                                 </div>
                                                 <div class="icon">
                                                     <i class="far fa-thumbs-up mt-4"
                                                         style="color:blue; font-size:50px;"></i>
                                                 </div>
+                                                <a href="{{url('/usersWhoLikedMe/'.$user['id'])}}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"
+                                                        style="color:#1DB9C3;"></i></a>
                                             </div>
                                         </div>
 
@@ -141,7 +146,7 @@
                                                 <div class="inner">
                                                     <p class="font-weight-bold">Total Match</p>
 
-                                                    <h3>3</h3>
+                                                    <h3>{{$matchUsers}}</h3>
                                                 </div>
                                                 <div class="icon">
                                                     <i class="fas fa-user mt-4"
@@ -154,7 +159,7 @@
                                                 <div class="inner">
                                                     <p class="font-weight-bold">Total Photos</p>
 
-                                                    <h3>4</h3>
+                                                    <h3>{{$photos}}</h3>
                                                 </div>
                                                 <div class="icon">
                                                     <i class="fas fa-images mt-4"
@@ -162,7 +167,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <!-- <div class="col-md-3">
                                             <div class="small-box bg-light">
                                                 <div class="inner">
                                                     <p class="font-weight-bold">Total Views</p>
@@ -175,6 +180,23 @@
                                                         style="color:#BE4BDB; font-size:50px;"></i>
                                                 </div>
                                             </div>
+                                        </div> -->
+                                        <div class="col-md-6">
+                                            <div class="small-box bg-light">
+                                                <div class="inner">
+                                                    <p class="font-weight-bold">Total Users Who I Liked</p>
+
+                                                    <h3>{{$usersIliked}}</h3>
+                                                </div>
+                                                <div class="icon">
+                                                    <i class="far fa-thumbs-up mt-4"
+                                                        style="color:blue; font-size:50px;"></i>
+                                                </div>
+                                                <a href="{{url('/usersIliked/'.$user['id'])}}"
+                                                    class="small-box-footer">More info <i
+                                                        class="fas fa-arrow-circle-right"
+                                                        style="color:#1DB9C3;"></i></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -185,6 +207,8 @@
             </div>
         </div>
     </section>
+
+    <br>
 
     <section class="content">
         <div class="container-fluid">
@@ -221,10 +245,22 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="small-box bg-light">
+                                                @if($user['isBlocked']==1)
                                                 <div class="inner" style=" background-color: #E02401;"><a
-                                                        href="{{url('user/update-verify',$user['id'])}}"
-                                                        style="color:white;"><i class="fas fa-ban"></i> Block User
+                                                        href="{{url('user/block',$user['id'])}}" style="color:white;">
+                                                        <i class="fas fa-ban"></i>
+                                                        Blocked
                                                     </a></div>
+
+                                                @else
+
+                                                <div class="inner" style=" background-color: #F15A27;"><a
+                                                        href="{{url('user/block',$user['id'])}}" style="color:white;"><i
+                                                            class="fas fa-check-circle"></i>
+                                                        Unblocked
+                                                    </a></div>
+
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -250,12 +286,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="small-box bg-light">
-                                                <!-- <div class="inner">
-                                                    <p class="font-weight-bold">Boost User</p>
-                                                    <a onclick="return confirm('Are you sure want to delete this Interest?')"
-                                                        href="{{url('/gift/delete/')}}" class="btn btn-warn"
-                                                        role="button"><i class="fas fa-bolt"></i></a>
-                                                </div> -->
+
                                                 <div class="inner" style=" background-color: #F15A27;"><a
                                                         href="{{url('user/update-verify',$user['id'])}}"
                                                         style="color:white;"><i class="fas fa-bolt"></i> Boost User
@@ -281,25 +312,34 @@
                 <div class="col-md-6">
                     <div class="card card-dark">
                         <div class="card-header d-flex justify-content-center">
-                            <h4 class="card-title">Payments</h4>
+                            <h4 class="card-title">BlockList</h4>
 
                         </div>
                         <div class="card-body" style="overflow-x:auto;">
                             <table id="" class="table table-hover overflow-auto">
                                 <thead>
                                     <tr>
-                                        <!-- <th>Sl.No</th> -->
-                                        <th>Id</th>
-                                        <th>Date</th>
-                                        <th>Amount</th>
+                                        <th>Sl.No</th>
+                                        <th>UserName</th>
+                                        <th>Email</th>
+                                        <th>ProfilePic</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($payments as $payment)
+                                    @foreach($user->blockedUsers as $blocked)
                                     <tr>
-                                        <td>{{ $payment->user_id }}</td>
-                                        <td>{{ $payment->created_at }}</td>
-                                        <td></td>
+                                        <td>{{$no++}}</td>
+                                        <td>{{$blocked->name}}</td>
+                                        <td>{{$blocked->email}}</td>
+                                        <td>
+                                            @if(!empty($blocked->profile_pic))
+
+                                            <img style="width: 50px; height: 50px;"
+                                                src="{{env('URL')}}{{$blocked->profile_pic}}" />
+                                            @else
+                                            <?php echo "no photo"?>
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -310,7 +350,7 @@
             </div>
         </div>
     </section>
-
+    <br>
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -325,47 +365,21 @@
                                 <div class="col-sm-2">
                                     <a href="{{env('URL')}}{{$user->imageUrl}}" data-toggle="lightbox"
                                         data-title="Photos" data-gallery="gallery">
-                                        <img src="{{env('URL')}}{{$user->imageUrl}}" class="img-fluid mb-2"
+                                        <img src="{{env('URL')}}{{$user->imageUrl}}" class="card-img-top img-thumbnail"
                                             alt="white sample" />
                                     </a>
+                                    <br>
+                                    <br>
                                 </div>
                                 @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-md-4">
-                    <div class="card card-dark">
-                        <div class="card-header d-flex justify-content-center">
-                            <h4 class="card-title">Payments</h4>
-
-                        </div>
-                        <div class="card-body" style="overflow-x:auto;">
-                            <table id="" class="table table-hover overflow-auto">
-                                <thead>
-                                    <tr>
-
-                                        <th>Id</th>
-                                        <th>Date</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($payments as $payment)
-                                    <tr>
-                                        <td>{{ $payment->user_id }}</td>
-                                        <td>{{ $payment->created_at }}</td>
-                                        <td></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
-    </section>
+</div>
+</section>
 </div>
 
 @endsection

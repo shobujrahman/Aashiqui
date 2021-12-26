@@ -15,10 +15,9 @@ class LikedPageController extends Controller
         
         $user=User::find($id);
         $firebaseservice = new FirebaseService();
-        
+
         $IdOfUsersWholikedMe = $firebaseservice->usersWhoLikedMe($firebaseDb, $user->id, 'liked');
         $myMatchedUser = $firebaseservice->matchList($firebaseDb, $user->id, 'matched');
-        
         
         
         $users = User::whereIn('id', $IdOfUsersWholikedMe)
@@ -37,15 +36,15 @@ class LikedPageController extends Controller
       $user = User::find($id);
         
     
-        $firebaseservice = new FirebaseService();
+      $firebaseservice = new FirebaseService();
 
-        $IdOfUsersWholikedMe = $firebaseservice->usersILiked($firebaseDb, $user->id, 'liked');
-        $myMatchedUser = $firebaseservice->matchList($firebaseDb, $user->id, 'matched');
-        
-        
-        $users = User::whereIn('id', $IdOfUsersWholikedMe)
-         
-        ->get();
+      $IdOfUsersWholikedMe = $firebaseservice->usersILiked($firebaseDb, $user->id, 'liked');
+      $myMatchedUser = $firebaseservice->matchList($firebaseDb, $user->id, 'matched');
+      
+      
+      $users = User::whereIn('id', $IdOfUsersWholikedMe)
+       
+      ->get();
 
         return view('user.users_I_LikedList', ['users' => $users,'user' => $user]);
     }

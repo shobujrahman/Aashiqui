@@ -28,13 +28,13 @@
                             <div class="inner">
                                 <p class="font-weight-bold">Total Gifts</p>
 
-                                <h3>9</h3>
+                                <h3>{{$giftCount}}</h3>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-gift mt-4" style="color:#FFC916; font-size:50px;"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"
-                                    style="color:#FFC916;"></i></a>
+                            <a href="{{url('/gift')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right" style="color:#FFC916;"></i></a>
                         </div>
                     </div>
                     <!--  -->
@@ -113,16 +113,21 @@
                                                         </div>
                                                         <!-- <div class="form-group">
                                                             <label for="ItemUrl">Category Image</label>
-                                                           
+                                                            
                                                             <div class="input-group">
                                                                 <input type="file"
-                                                                    class="form-control @error('ItemUrl') is-invalid @enderror"
-                                                                    id="ItemUrl" name="ItemUrl">
+                                                                class="form-control @error('ItemUrl') is-invalid @enderror"
+                                                                id="ItemUrl" name="ItemUrl">
                                                                 &nbsp; &nbsp;
-                                                               
+                                                                
                                                             </div>
-                                                    
+                                                            
                                                         </div> -->
+                                                        <div class="form-group">
+                                                            <label for="price">Price</label>
+                                                            <input type="text" class="form-control form-control-border"
+                                                                name="price" id="price" placeholder="enter price">
+                                                        </div>
 
                                                         <div class="form-group">
                                                             <label for="ItemUrl">Image</label>
@@ -159,6 +164,7 @@
                                         <tr>
                                             <th>Sl.No</th>
                                             <th>Name</th>
+                                            <th>Price</th>
                                             <th>ItemUrl</th>
                                             <th>Actions</th>
                                         </tr>
@@ -168,10 +174,14 @@
                                         <tr>
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $gift->name }}</td>
+                                            <td>{{ $gift->price }}</td>
                                             <td>
                                                 @if(!empty($gift->ItemUrl))
-                                                <img style="width: 100px; height: 100px;" alt="no image"
-                                                    src="{{asset('images/'.$gift->ItemUrl)}}" />
+                                                <!-- <img style="width: 100px; height: 100px;" alt="no image"
+                                                    src="{{asset('images/'.$gift->ItemUrl)}}" /> -->
+
+                                                <img style="width: 100px; height: 100px;"
+                                                    src="{{env('URL')}}{{$gift->ItemUrl}}" alt="User Avatar">
                                                 @endif
                                             </td>
                                             <td>
@@ -200,8 +210,8 @@
                                                                     name="editGift" id="editGift"
                                                                     action="{{ url('/gift/update/'.$gift->id) }}"
                                                                     method="post" enctype="multipart/form-data">@csrf
-                                                                    <input type="hidden" name="old_img"
-                                                                        value="{{$gift->ItemUrl}}">
+                                                                    <!-- <input type="hidden" name="old_img"
+                                                                        value="{{$gift->ItemUrl}}"> -->
                                                                     <div class="card-body">
                                                                         <div class="form-group">
                                                                             <label for="name">Name</label>
@@ -213,13 +223,23 @@
                                                                         </div>
 
                                                                         <div class="form-group">
+                                                                            <label for="price">Price</label>
+                                                                            <input type="text"
+                                                                                class="form-control form-control-border"
+                                                                                name="price" id="price"
+                                                                                value="{{ $gift->price }}"
+                                                                                placeholder="enter price">
+                                                                        </div>
+
+                                                                        <div class="form-group">
                                                                             <label for="ItemUrl">Image</label>
                                                                             <div class="input-group">
                                                                                 <input type="file" id="ItemUrl"
                                                                                     name="ItemUrl"
                                                                                     class="dropify @error('ItemUrl') is-invalid @enderror"
                                                                                     value="{{ old('ItemUrl') }}"
-                                                                                    data-default-file="{{asset('images/'.$gift->ItemUrl)}}">
+                                                                                    data-default-file="{{env('URL')}}{{$gift->ItemUrl}}">
+
                                                                                 @error('image')
                                                                                 <div class="alert alert-danger">
                                                                                     {{ $message }}</div>

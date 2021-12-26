@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Gift;
 use App\Models\User;
 use App\Models\UserLike;
 use App\Models\UserSubscription;
@@ -30,13 +30,15 @@ class HomeController extends Controller
     public function index()
     {
         Session::put('page', 'dashoard');
-        $userCount = User::count();
+        $userCount = User::where('isAdminGenerated','=',0)->count();
+        $fakeUserCount = User::where('isAdminGenerated','=',1)->count();
         $maleCount = User::where('gender','male')->count();
         $femaleCount = User::where('gender','female')->count();
         $verifyCount = User::where('isVerified',1)->count();
         $unVerifyCount = User::where('isVerified',0)->count();
         $activeCount = User::where('last_active','>=',now())->count();
         $likeCount = UserLike::count();
+        $giftCount = Gift::count();
         $subscriptionCount = UserSubscription::count();
         $matchCount = UserLike::where('isMatched',1)->count();
         // return $subscriptionCount;
@@ -49,7 +51,21 @@ class HomeController extends Controller
 
         
         return view('home',
-            compact('unVerifyCount','subscriptionCount','matchCount','userCount','maleCount','femaleCount','verifyCount','subscription','activeCount','recentActive','likeCount'));
+            compact([
+                'fakeUserCount',
+                'unVerifyCount',
+                'subscriptionCount',
+                'matchCount',
+                'userCount',
+                'maleCount',
+                'femaleCount',
+                'verifyCount',
+                'subscription',
+                'activeCount',
+                'recentActive',
+                'likeCount',
+                'giftCount'
+            ]));
         
     }
 

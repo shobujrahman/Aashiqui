@@ -272,6 +272,7 @@ class UserSettingController extends Controller
 
 
 
+
     public function updateUserSetting(Request $request)
     {
         $user = auth()->user();

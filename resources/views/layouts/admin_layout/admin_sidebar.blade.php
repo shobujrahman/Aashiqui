@@ -149,6 +149,20 @@
                 </li>
                 <!--  -->
                 <li class="nav-item">
+                    @if(Session::get('page') == 'comment')
+                    <?php $active = 'active'; ?>
+                    @else
+                    <?php $active = ''; ?>
+                    @endif
+                    <a href="{{url('/comments')}}" class="nav-link {{$active}}">
+                        <i class="nav-icon fas fa-exclamation-triangle"></i>
+                        <p>
+                            Comments
+                        </p>
+                    </a>
+                </li>
+                <!--  -->
+                <li class="nav-item">
                     @if(Session::get('page') == 'report')
                     <?php $active = 'active'; ?>
                     @else

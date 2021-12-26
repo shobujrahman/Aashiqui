@@ -3,29 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\UserLike;
+use App\Models\UserBlock;
+// use App\Models\UserLike;
 use App\Models\UserPaymentHistory;
-use App\Models\UserPhoto;
+// use App\Models\UserPhoto;
 use App\Models\UserSubscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-// use Kreait\Firebase\Database;
+use App\services\FirebaseService;
+use Kreait\Firebase\Database;
 
 class UserController extends Controller
-{
-
-    // public function __construct(Database $database)
-    // {
-    //     $this->database = $database;
-    //     $this->tableName = 'liked';
-    // }
-    
-    
+{    
     //getAllUsers
     public function getAllUsers(){
         Session::put('page','user');
-        $users = User::with(['userSubscription'])->orderby('id','desc')->get()->toArray();
+        $users = User::with(['userSubscription'])->where('isAdminGenerated','=',0)->orderby('id','desc')->get()->toArray();
 
                
             foreach($users as $key=>$user){
@@ -39,7 +33,8 @@ class UserController extends Controller
             }
 
 
-            $userCount = User::count();
+            $userCount = User::where('isAdminGenerated','=',0)->count();
+            $fakeUserCount = User::where('isAdminGenerated','=',1)->count();
             $activeCount = User::where('last_active','>=',now())->count();
             $verifyCount = User::where('isVerified',1)->count();
             $unVerifyCount = User::where('isVerified',0)->count();
@@ -57,6 +52,7 @@ class UserController extends Controller
                 'premiumCount' => $premiumCount,
                 'maleCount' => $maleCount,
                 'femaleCount' => $femaleCount,
+                'fakeUserCount' => $fakeUserCount,
                 
             
             ])->with('no',1);
@@ -96,21 +92,45 @@ class UserController extends Controller
     }
 
 
-    public function show($id){
-        $user = User::find($id);
+    public function show(Database $firebaseDb,$id){
+        $user = User::with('blockedUsers')->find($id);
+        //get all blockd users of this id
+        // $blockUsers = UserBlock::where('blockerId',$id)->get();
+        
+        // return $user;
 
         $user->followerCount = $user->followersCount();
         $user->followingCount = $user->followingCount();
 
         $user->userPhotos = $user->photos()->get();
+        
+        // $user->blockedUsers = $user->blockedUsers()->get();
+        
+        $photos= $user->userphotos = $user->photos()->count();
+       
 
         $payments = UserPaymentHistory::get();
-    
-        return view('user.show', ['user' => $user, 'payments' => $payments]);
+
+        $firebaseservice = new FirebaseService();
+        
+        $IdOfUsersWholikedMe = $firebaseservice->usersWhoLikedMe($firebaseDb, $user->id, 'liked');
+        $IdOfUsersIliked = $firebaseservice->usersILiked($firebaseDb, $user->id, 'liked');
+        $myMatchedUser = $firebaseservice->matchList($firebaseDb, $user->id, 'matched');
+        //matchcount
+        $matchUsers = User::whereIn('id', $myMatchedUser)->count();
+        //user who liked me count        
+        $usersWhoLikedMe = User::whereIn('id', $IdOfUsersWholikedMe)->whereNotIn('id', $myMatchedUser)->count();
+
+        //user i liked count
+        $usersIliked = User::whereIn('id', $IdOfUsersIliked)->whereNotIn('id', $myMatchedUser)->count();
+        // return $usersIliked;
+        
+        
+        return view('user.show', ['user' => $user,'photos' => $photos,'usersIliked' => $usersIliked,'usersWhoLikedMe' => $usersWhoLikedMe, 'matchUsers' => $matchUsers,'payments' => $payments,])->with('no',1);
     }
 
 
-
+//verify Users
     public function updateVerify($id){
         $verify = DB::table('users')
         ->select('isVerified')
@@ -127,7 +147,26 @@ class UserController extends Controller
         //update user status
         $values = array('isVerified'=>$status);
         DB::table('users')->where('id',$id)->update($values);
-        return redirect()->back()->with('message','updated user type');
+        return redirect()->back()->with('message','Verification updated');
+    }
+//Block unblock Users
+    public function updateBlock($id){
+        $block = DB::table('users')
+        ->select('isBlocked')
+        ->where('id', '=', $id)
+        ->first();
+
+        //check user Status
+        if($block->isBlocked=='1'){
+            $status = '0';
+        }else{
+            $status = '1';
+        }
+
+        //update user block status
+        $values = array('isBlocked'=>$status);
+        DB::table('users')->where('id',$id)->update($values);
+        return redirect()->back()->with('message','Block Status updated');
     }
 
 //view male user
@@ -153,25 +192,5 @@ class UserController extends Controller
         return redirect('/user')->with('message','deleted user');
     }
 
-
-    //function for firebase
-
-    // public function getAllLikes(){
-    //     $users = $this->database->getReference( $this->tableName )->getValue();
-    //     // $userList=[];
-    //     // foreach ($users as   $user) {
-    //     //     if( $user['likedBy'] ==34 ){
-    //     //         //if  $user['likedTo'] is already in  $userList continue
-    //     //          if( in_array($user['likedTo'], $userList) ){
-    //     //               continue;
-    //     //          }
-    //     //         $userList[] = $user['likedTo'];
-    //     //     }
-    //     //  }
-         
-    //     //  return  $userList;
-    //     // return $users;
-    //      return view('user.userLikes',compact('users'));
-    // }
         
 }

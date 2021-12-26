@@ -58,12 +58,12 @@
                             <div class="inner">
                                 <p class="font-weight-bold">Fake Users</p>
 
-                                <h3>0</h3>
+                                <h3>{{$fakeUserCount}}</h3>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-users mt-4" style="color:#000000; font-size:50px;"></i>
                             </div>
-                            <a href="{{url('/femaleUser')}}" class="small-box-footer">More info <i
+                            <a href="{{url('/fakeUsers')}}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right" style="color:#000000;"></i></a>
                         </div>
                     </div>
