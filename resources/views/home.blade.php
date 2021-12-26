@@ -30,7 +30,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-light">
                         <div class="inner">
-                            <p class="font-weight-bold">Total Users</p>
+                            <p class="font-weight-bold">Total Real Users</p>
 
                             <h3>{{$userCount}}</h3>
                         </div>
@@ -39,6 +39,21 @@
                         </div>
                         <a href="{{url('/user')}}" class="small-box-footer">More info
                             <i class="fas fa-arrow-circle-right" style="color:#9e4296;"></i></a>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-light">
+                        <div class="inner">
+                            <p class="font-weight-bold">Total Fake Users</p>
+
+                            <h3>{{$fakeUserCount}}</h3>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-users mt-4" style="color:red; font-size:50px;"></i>
+                        </div>
+                        <a href="{{url('/fakeUsers')}}" class="small-box-footer">More info
+                            <i class="fas fa-arrow-circle-right" style="color:red;"></i></a>
                     </div>
                 </div>
                 <!--  -->

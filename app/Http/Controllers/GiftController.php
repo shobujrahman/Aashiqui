@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class GiftController extends Controller
 {
@@ -21,16 +22,17 @@ class GiftController extends Controller
     {
         $gift = new Gift();
 
-        
-            //image
-            $imageName = time().'.'.$request->ItemUrl->extension();  
-            $request->ItemUrl->move(public_path('images/'), $imageName);
-            $gift->ItemUrl = $imageName;
+            $s3 = Storage::disk('do_spaces');
+            $file = $request->file('ItemUrl');
+            $fileName = $file->getClientOriginalName();
+
+           
+            $path = $s3->putFileAs('Asiquee/GiftImage', $file, $fileName, 'public');
+            $gift->ItemUrl= $path;
             
         
         $gift->name = $request->name;
-        $gift->ItemUrl = $imageName;
-        // $gift->price = $request->price;
+        $gift->price = $request->price;
         $gift->save();
         return redirect('/gift');
     }
@@ -39,26 +41,29 @@ class GiftController extends Controller
     public function update(Request $request, $id)
     {
         $gift = Gift::find($id);
-        $old_img = $request->input('old_img');
-        if($request->ItemUrl){
-            //image
-            $imageName = time().'.'.$request->ItemUrl->extension();  
-            $request->ItemUrl->move(public_path('images/'), $imageName);
-            $gift->ItemUrl = $imageName;
-            
-            
-            $path1 = public_path('images/'.$old_img);
-            if(file_exists($path1)){
-                @unlink($path1);
-            }
-            $gift->update();
+
+        $s3 = Storage::disk('do_spaces');
+        $file = $request->file('ItemUrl');
         
-        }else{
+        
+        if($file){
+            $fileName = $file->getClientOriginalName();
+
+            if ($gift->ItemUrl != null) {
+                $s3->delete($gift->ItemUrl);
+                $path = $s3->putFileAs('Asiquee/GiftImage', $file, $fileName, 'public');
+                $gift->update(['ItemUrl' => $path]);
+            } else {
+                $path = $s3->putFileAs('Asiquee/GiftImage', $file, $fileName, 'public');
+                $gift->ItemUrl= $path;
+                // $gift->save();
+            }
+        }
 
             $gift->name = $request->name;
-            // $gift->price = $request->price;
-        }
+            $gift->price = $request->price;
         
+
         $gift->update();
         return redirect('/gift');
     }

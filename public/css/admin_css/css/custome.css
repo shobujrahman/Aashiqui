@@ -48,8 +48,11 @@ height:74px;
 }
 
 .img-circle {
-  vertical-align: middle;
-    width: 150px;
-    max-height: 105px;
-    border-radius: 10%;
+  vertical-align: middle;  
+}
+
+.widget-user .widget-user-image > img {
+  border: 3px solid #fff;
+  height: 125px;
+  width: 126px;
 }
