@@ -175,9 +175,6 @@
                                             <th>Age</th>
                                             <th>UserType</th>
                                             <th>Subscription</th>
-                                            <th>Like</th>
-
-                                            <th>Match</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -216,8 +213,7 @@
                                                 <label class="label" style=" background-color: #F15A27;">Free</label>
                                                 @endif
                                             </td>
-                                            <td></td>
-                                            <td></td>
+
                                             <td></td>
 
 

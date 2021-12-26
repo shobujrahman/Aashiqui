@@ -73,7 +73,7 @@ class FirebaseService
 
         if ($firebaseLikedArray) {
             foreach ($firebaseLikedArray as $item) {
-                if ($item['myid'] == $appUserId  && $item['tag'] == 'liked') {
+                if ($item['myid'] == $appUserId  && $item['tag'] == 'matched') {
 
                     $matchList[] = $item['likeduserid'];
                 } elseif ($item['likeduserid'] == $appUserId) {

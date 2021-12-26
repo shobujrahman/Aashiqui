@@ -28,13 +28,13 @@
                             <div class="inner">
                                 <p class="font-weight-bold">Total Gifts</p>
 
-                                <h3>9</h3>
+                                <h3>{{$giftCount}}</h3>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-gift mt-4" style="color:#FFC916; font-size:50px;"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"
-                                    style="color:#FFC916;"></i></a>
+                            <a href="{{url('/gift')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right" style="color:#FFC916;"></i></a>
                         </div>
                     </div>
                     <!--  -->

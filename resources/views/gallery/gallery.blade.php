@@ -37,8 +37,9 @@
                                             class="profile-pic img-thumbnail" alt="white sample" />
                                         &nbsp;
                                         <div class="flex-column mt-2">
-                                            <label class="label p-2"
-                                                style=" background-color: #045CA6;">{{$user->user->name}}</label>
+                                            <a href="{{url('/user/show/'.$user->user->id)}}"><label class="label p-2"
+                                                    style=" background-color: #045CA6;">
+                                                    {{$user->user->name}}</label></a>
                                         </div>
                                     </div>
                                     &nbsp;

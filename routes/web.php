@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FakeUserController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\GiftController;
@@ -54,6 +55,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
     Route::get('/user/delete/{id}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::get('/user/update-verify/{id}',  [UserController::class, 'updateVerify'])->name('user.updateVerify');
+    Route::get('/user/block/{id}',  [UserController::class, 'updateBlock'])->name('user.updateBlock');
     //subscription
     Route::get('/subscription', [SubscriptionController::class, 'getAllSubscription'])->name('subscription');
     Route::get('/subscription/create', [SubscriptionController::class, 'create'])->name('subscription.create');
@@ -88,7 +90,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/verification/update/{id}', [VerificationController::class, 'update'])->name('verification.update');
     Route::get('/verification/delete/{id}',  [VerificationController::class, 'destroy'])->name('verification.destroy');
     
-    //live stream
+    //live stream for fake User
     Route::get('/liveStream', [LiveStreamController::class, 'allLiveStream'])->name('liveStream');
     Route::get('/liveStream/create', [LiveStreamController::class, 'create'])->name('liveStream.create');
     Route::post('/liveStream/submit', [LiveStreamController::class, 'store'])->name('liveStream.submit');
@@ -122,9 +124,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/usersIliked/{id}', [LikedPageController::class, 'usersIliked'])->name('like.usersIliked');
 
     
-    //FakeUserController
+    //FakeUser Controller
     Route::get('/fakeUsers', [FakeUserController::class, 'fakeUsersList'])->name('fakeUser.fakeUsersList');
     Route::get('/fakeUsers/create', [FakeUserController::class, 'create'])->name('fakeUser.create');
     Route::post('/fakeUsers/submit', [FakeUserController::class, 'store'])->name('fakeUser.submit');
+    
+    //Comment Controller
+    Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
+    Route::get('/comments/create', [CommentController::class, 'create'])->name('comments.create');
+    Route::post('/comments/submit', [CommentController::class, 'store'])->name('comments.submit');
+    Route::get('/comments/edit/{id}', [CommentController::class, 'edit'])->name('comments.edit');
+    Route::post('/comments/update/{id}', [CommentController::class, 'update'])->name('comments.update');
+    Route::get('/comments/delete/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
    
 });

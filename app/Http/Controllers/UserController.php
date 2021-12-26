@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserBlock;
 // use App\Models\UserLike;
 use App\Models\UserPaymentHistory;
 // use App\Models\UserPhoto;
@@ -92,22 +93,24 @@ class UserController extends Controller
 
 
     public function show(Database $firebaseDb,$id){
-        $user = User::find($id);
+        $user = User::with('blockedUsers')->find($id);
+        //get all blockd users of this id
+        // $blockUsers = UserBlock::where('blockerId',$id)->get();
+        
+        // return $user;
 
         $user->followerCount = $user->followersCount();
         $user->followingCount = $user->followingCount();
 
         $user->userPhotos = $user->photos()->get();
         
+        // $user->blockedUsers = $user->blockedUsers()->get();
+        
         $photos= $user->userphotos = $user->photos()->count();
        
 
         $payments = UserPaymentHistory::get();
 
-
-        // $user = auth()->user();
-       
-        // $user=User::find($id);
         $firebaseservice = new FirebaseService();
         
         $IdOfUsersWholikedMe = $firebaseservice->usersWhoLikedMe($firebaseDb, $user->id, 'liked');
@@ -123,11 +126,11 @@ class UserController extends Controller
         // return $usersIliked;
         
         
-        return view('user.show', ['user' => $user,'photos' => $photos,'usersIliked' => $usersIliked,'usersWhoLikedMe' => $usersWhoLikedMe, 'matchUsers' => $matchUsers,'payments' => $payments]);
+        return view('user.show', ['user' => $user,'photos' => $photos,'usersIliked' => $usersIliked,'usersWhoLikedMe' => $usersWhoLikedMe, 'matchUsers' => $matchUsers,'payments' => $payments,])->with('no',1);
     }
 
 
-
+//verify Users
     public function updateVerify($id){
         $verify = DB::table('users')
         ->select('isVerified')
@@ -145,6 +148,25 @@ class UserController extends Controller
         $values = array('isVerified'=>$status);
         DB::table('users')->where('id',$id)->update($values);
         return redirect()->back()->with('message','Verification updated');
+    }
+//Block unblock Users
+    public function updateBlock($id){
+        $block = DB::table('users')
+        ->select('isBlocked')
+        ->where('id', '=', $id)
+        ->first();
+
+        //check user Status
+        if($block->isBlocked=='1'){
+            $status = '0';
+        }else{
+            $status = '1';
+        }
+
+        //update user block status
+        $values = array('isBlocked'=>$status);
+        DB::table('users')->where('id',$id)->update($values);
+        return redirect()->back()->with('message','Block Status updated');
     }
 
 //view male user

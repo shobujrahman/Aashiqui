@@ -49,3 +49,36 @@ $(document).ready(function () {
     });
 
 });
+
+//fake streaming
+$(document).ready(function () {
+    $("#type").change(function () {
+        var type = $("#type").val();
+
+        if (type == "Others") {
+            $("#url").hide(1000);
+            $("#upload_video").show(1000);
+        }
+
+        else {
+            $("#url").show(1000);
+            $("#upload_video").hide(1000);
+        }
+
+
+    });
+
+    $(window).on('load', function () {
+        var type = $("#video_type").val();
+
+        if (type == 6) {
+            $("#url").show(1000);
+            $("#upload_video").hide(1000);
+        }
+        else {
+            $("#upload_video").show(1000);
+            $("#url").hide(1000);
+        }
+    });
+
+});
