@@ -69,10 +69,10 @@ class SwipePageController extends Controller
         $users = User::with(['userPhotoLastThree', 'interests'])
             ->where('id', '!=', auth()->id())
             // ->where('gender',$user->preferedGenderSearch)	
-         //   ->when($user->preferedGenderSearch == 'male', function ($query) {
+            //   ->when($user->preferedGenderSearch == 'male', function ($query) {
             //    $query->where('gender', 'male');
-          //  })
-           // ->when($user->preferedGenderSearch == 'female', function ($query) {
+            //  })
+            // ->when($user->preferedGenderSearch == 'female', function ($query) {
             //    $query->where('gender', 'female');
             //})
             ->whereRaw("acos(sin($latitude) * sin(radians(latitude))
@@ -87,11 +87,19 @@ class SwipePageController extends Controller
             ->limit($swipeLimit)
             ->get();
 
+        //get fake users
+        $fakeUsers = User::where('isAdminGenerated', 1)->with(['userPhotoLastThree', 'interests'])
+            ->get();
+
         //merge users and boosted users
         //$nearByUser = $user->merge($boostedUsers)->shuffle();
 
+        //merge fake user in user 
+        $nearByUser = $users->merge($fakeUsers)->shuffle();
+
         $authUserInterests = $user->interests()->get()->pluck('id')->toArray();
-        foreach ($users as $u) {
+
+        foreach ($nearByUser as $u) {
 
             foreach ($u->interests as $interest) {
                 $interest->isCommon = in_array($interest->id, $authUserInterests) ? true : false;
@@ -100,6 +108,6 @@ class SwipePageController extends Controller
 
 
 
-        return $users;
+        return $nearByUser;
     }
 }

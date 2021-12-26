@@ -90,15 +90,21 @@ class FirebaseService
     {
 
         $firebaseLikedArray = $db->getReference($tableName)->getValue();
-        $liveusers = [];
+        $usersAgoraToken = [];
+        $usersChanelName = [];
+
 
         if ($firebaseLikedArray) {
             foreach ($firebaseLikedArray as $item) {
 
-                $liveusers[] = $item['userid'];
+                $usersAgoraToken[$item['userid']] = $item['agoratoken'];
+                $usersChanelName[$item['userid']] = $item['channelname'];
             }
         }
 
-        return  $liveusers;
+        return  [
+            'usersAgoraToken' => $usersAgoraToken,
+            'usersChanelName' => $usersChanelName
+        ];
     }
 }

@@ -26,13 +26,15 @@ class InterestController extends Controller
     public function usersWithCommonInterests()
     {
         //get users interest
+
+
         $user = auth()->user();
         $interests = $user->interests()->get();
         //get users with common interest
         $users = User::whereHas('interests', function ($query) use ($interests) {
             $query->whereIn('interests.id', $interests->pluck('id'));
         })
-          ->where('gender',  auth()->user()->preferedGenderSearch)
+            ->where('gender',  auth()->user()->preferedGenderSearch)
             ->where('id', '!=', $user->id)
             ->with('profilePics')
             ->get();

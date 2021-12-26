@@ -133,8 +133,8 @@ class UserSettingController extends Controller
         $user->preferedGenderSearch = $request->preferedGenderSearch;
         $user->save();
         return response()->json([
-            'status' => 'success',
-            'data' => $user->preferedGenderSearch
+            'success' => true,
+            'user' => $user
         ]);
     }
     public function selectInterest(Request $request)
@@ -242,7 +242,7 @@ class UserSettingController extends Controller
 
         $user->interests()->sync($request->interestsList);
 
-         return response()->json([
+        return response()->json([
             'success' => true,
             'message' => ' updated successfully'
         ]);
@@ -258,14 +258,93 @@ class UserSettingController extends Controller
             'message' => 'fcm token updated successfully'
         ]);
     }
-    
-      public function getUserFcmToken($uid)
+
+    public function getUserFcmToken($uid)
     {
-       $user =  User::find($uid);
+        $user =  User::find($uid);
         return response()->json([
             'success' => true,
             'message' => 'fcm token updated successfully',
             'fcm_device_token' => $user->fcm_device_token
+        ]);
+    }
+
+
+
+
+
+    public function updateUserSetting(Request $request)
+    {
+        $user = auth()->user();
+
+
+        //make validation
+        $validation = Validator::make($request->all(), [
+            'contactNo' => 'required|max:15',
+            'preferedSearchDistance' => 'required',
+            'prefered_age_maximum' => 'required',
+            'prefered_age_minimum' => 'required',
+            'email' => 'required|email',
+            'visibleOnApp' => 'required|in:0,1',
+
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validation->errors()->first()
+            ]);
+        }
+
+        if( $request->has('contactNo')){
+            $user->contactNo = $request->contactNo;
+
+        }
+        $user->preferedSearchDistance = $request->preferedSearchDistance;
+        $user->prefered_age_minimum = $request->prefered_age_maximum;
+        $user->prefered_age_maximum = $request->prefered_age_minimum;
+        $user->email = $request->email;
+        $user->preferedGenderSearch = $request->preferedGenderSearch;
+
+        $user->visibleOnApp = $request->visibleOnApp;  //take 0 or 1 value
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'updated successfully'
+        ]);
+    }
+
+    public function getUserSettings()
+    {
+        $user = auth()->user();
+
+        $userSettings = [];
+        $userSettings['contactNo'] = $user->contactNo;
+        $userSettings['preferedSearchDistance'] = $user->preferedSearchDistance;
+        $userSettings['prefered_age_maximum'] = $user->prefered_age_maximum;
+        $userSettings['prefered_age_minimum'] = $user->prefered_age_minimum;
+        $userSettings['email'] = $user->email;
+        $userSettings['visibleOnApp'] = $user->visibleOnApp;
+        $userSettings['latitude'] = $user->latitude;
+        $userSettings['longitude'] = $user->longitude;
+        $userSettings['preferedGenderSearch'] = $user->preferedGenderSearch;
+        return response()->json([
+            'success' => true,
+            'message' => 'settings fetched successfully',
+            'user' => $userSettings
+        ]);
+    }
+
+
+    public function setSexualOrientation(Request $request)
+    {
+        $user = auth()->user();
+        $user->sexual_orientation = $request->sexualOrientation;
+        $user->save();
+        return response()->json([
+            'success' => true,
+            'user' => $user
         ]);
     }
 }
