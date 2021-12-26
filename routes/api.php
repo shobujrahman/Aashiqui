@@ -14,7 +14,7 @@ use App\Http\Controllers\ApiControllers\BlockController;
 use App\Http\Controllers\ApiControllers\ReportController;
 use App\Http\Controllers\ApiControllers\LikedPageController;
 use App\Http\Controllers\ApiControllers\AgoraTokenGeneratorController;
-
+use App\Http\Controllers\ApiControllers\LiveStreamingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +59,13 @@ Route::group(['middleware' => ['auth:api']], function () {
   Route::get('/updateActiveStatus', [UserSettingController::class, 'updateActiveStatus']);
   Route::post('/setEmail', [UserSettingController::class, 'setEmail']);
   Route::post('/setSchool', [UserSettingController::class, 'setSchool']);
+  Route::post('/setSexualOrientation', [UserSettingController::class, 'setSexualOrientation']);
+  Route::post('/updateUserSettings', [UserSettingController::class, 'updateUserSetting']);
+
+  Route::get('/getUserSettings', [UserSettingController::class, 'getUserSettings']);
+
+
+
 
   //fcm token store
   Route::post('/setFcmDeviceToken', [UserSettingController::class, 'setFcmDeviceToken']);
@@ -129,8 +136,11 @@ Route::group(['middleware' => ['auth:api']], function () {
 
   Route::get('/matchList', [MatchController::class, 'getUserMatchList']);
 });
-Route::get('/liveStreamingusers', [LikedPageController::class, 'liveStreamingUser']);
+Route::get('/liveStreamingusers', [LiveStreamingController::class, 'liveStreamings']);
+Route::get('/fakeComments', [LiveStreamingController::class, 'getFakeComments']);
+
 Route::get('/liveStreamingUsersDetails/{id}', [LikedPageController::class, 'liveStreamingUsersDetails']);
 
 
 Route::post('/getAgoraToken', [AgoraTokenGeneratorController::class, 'generateToken']);
+Route::post('/deleteUserPhoto', [UserProfileController::class, 'deleteUserPhoto']);

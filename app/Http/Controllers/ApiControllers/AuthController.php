@@ -76,11 +76,15 @@ class AuthController extends Controller
         return response()->json($resp);
     }
 
+
+
     public function createUserWIthPhone(Request $request)
     {
         $resp = PhoneAuth::createUser($request->phone);
         return response()->json($resp);
     }
+
+
 
 
 
@@ -106,7 +110,7 @@ class AuthController extends Controller
         if ($user) {
             return response()->json(['success' => true, 'data' =>  true]);
         } else {
-            return response()->json(['success' => true, 'data' => false]);
+            return response()->json(['success' => false, 'data' => null]);
         }
     }
 }

@@ -14,34 +14,34 @@ class User extends Authenticatable
     use HasFactory, HasApiTokens;
 
     protected $guarded = [];
-    
-     protected $hidden = [
+
+    protected $hidden = [
         'password',
         'remember_token',
     ];
 
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'user_follows', 'following_id','follower_id')
-           ->select(['follower_id','name', 'profile_pic']);
-             
-    }
-    
-    public function followersCount(){
-        return $this->belongsToMany(User::class,'user_follows','following_id','follower_id')
-        ->where('user_follows.following_id',$this->id)->count();
+        return $this->belongsToMany(User::class, 'user_follows', 'following_id', 'follower_id')
+            ->select(['follower_id', 'name', 'profile_pic']);
     }
 
-   public function following()
+    public function followersCount()
     {
-        return $this->belongsToMany(User::class, 'user_follows', 'follower_id' ,'following_id')
-           ->select([ 'following_id', 'name', 'profile_pic']);
-            
+        return $this->belongsToMany(User::class, 'user_follows', 'following_id', 'follower_id')
+            ->where('user_follows.following_id', $this->id)->count();
     }
 
-    public function followingCount(){
-        return $this->belongsToMany(User::class,'user_follows','follower_id','following_id')
-        ->where('user_follows.follower_id',$this->id)->count();
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'user_follows', 'follower_id', 'following_id')
+            ->select(['following_id', 'name', 'profile_pic']);
+    }
+
+    public function followingCount()
+    {
+        return $this->belongsToMany(User::class, 'user_follows', 'follower_id', 'following_id')
+            ->where('user_follows.follower_id', $this->id)->count();
     }
 
 
@@ -102,15 +102,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserSubscription::class, 'user_id', 'id');
     }
-    
+
     public function userPhoto()
     {
         return $this->hasMany(UserPhoto::class, 'userId');
     }
-    
+
     public function userPhotoLastThree()
     {
-        return $this->userPhoto()->orderBy('id', 'desc')->take(3);
+        return $this->userPhoto()->orderBy('id', 'desc');
     }
     public function getBirthdateAttribute()
     {
@@ -119,5 +119,11 @@ class User extends Authenticatable
     public function isFollowing($userId)
     {
         return $this->following()->where('following_id', $userId)->exists();
+    }
+
+
+    public function fakeVideos()
+    {
+        return $this->hasMany(FakeUserLiveStreaming::class, 'user_id');
     }
 }
